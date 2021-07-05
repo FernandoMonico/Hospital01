@@ -11,9 +11,9 @@ namespace Hospital01.Controllers
 {
     public class EspecialidadController : Controller
     {
-        private readonly IMapper mapper;
-        public EspecialidadController(IMapper _mapper) {
-            mapper = _mapper;
+        private readonly IMapper _mapper;
+        public EspecialidadController(IMapper mapper) {
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -27,7 +27,7 @@ namespace Hospital01.Controllers
                 //                           Nombre = especialidad.Nombre,
                 //                           Descripcion = especialidad.Descripcion
                 //                       }).ToList();
-                especialidadDtoList = db.Especialidad.Where(x => x.Bhabilitado == 1).Select(x => mapper.Map<EspecialidadDto>(x)).ToList();
+                especialidadDtoList = db.Especialidad.Where(x => x.Bhabilitado == 1).Select(x => _mapper.Map<EspecialidadDto>(x)).ToList();
             }
             return View(especialidadDtoList);
         }
