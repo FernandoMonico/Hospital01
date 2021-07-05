@@ -10,7 +10,12 @@ namespace Hospital01.Dto
     public class Mapper : Profile
     {
         public Mapper() {
-            CreateMap<Especialidad, EspecialidadDto>();
+            CreateMap<Especialidad, EspecialidadDto>()
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.Iidespecialidad));
+            CreateMap<EspecialidadTestMap1Dto, EspecialidadDto>()
+                .ForMember(x => x.TestMessage1, y => y.MapFrom(z => z.TestMessage));
+            CreateMap<EspecialidadTestMap2Dto, EspecialidadDto>()
+                .ForMember(x => x.TestMessage2, y => y.MapFrom(z => z.TestMessage));
         }
     }
 }

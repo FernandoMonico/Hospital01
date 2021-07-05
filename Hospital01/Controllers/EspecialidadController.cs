@@ -28,6 +28,12 @@ namespace Hospital01.Controllers
                 //                           Descripcion = especialidad.Descripcion
                 //                       }).ToList();
                 especialidadDtoList = db.Especialidad.Where(x => x.Bhabilitado == 1).Select(x => _mapper.Map<EspecialidadDto>(x)).ToList();
+                EspecialidadTestMap1Dto especialidadTestMap1Dto = new EspecialidadTestMap1Dto { Active = true, TestMessage = "Message 1" };
+                EspecialidadTestMap2Dto especialidadTestMap2Dto = new EspecialidadTestMap2Dto { Active = true, TestMessage = "Message 2" };
+                for(int i = 0; i < especialidadDtoList.Count; i++) {
+                    _mapper.Map(especialidadTestMap1Dto, especialidadDtoList[i]);
+                    _mapper.Map(especialidadTestMap2Dto, especialidadDtoList[i]);
+                }
             }
             return View(especialidadDtoList);
         }

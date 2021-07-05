@@ -9,7 +9,7 @@ namespace Hospital01.Dto
 {
     public class EspecialidadDto
     {
-        public int Iidespecialidad { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "El campo 'Nombre' es requirido.")]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
@@ -17,5 +17,7 @@ namespace Hospital01.Dto
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
         public int? Bhabilitado { get; set; }
+        public string TestMessage1 { get; set; }
+        public string TestMessage2 { get; set; }
     }
 }
