@@ -1,0 +1,35 @@
+﻿@using Hospital01.Dto
+@model List<EspecialidadDto>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Especialidades</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Mensaje 1</th>
+                    <th>Mensaje 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var especialidad in Model)
+                {
+                    <tr>
+                        <td>@especialidad.Nombre</td>
+                        <td>@especialidad.Descripcion</td>
+                        <td>@especialidad.TestMessage1</td>
+                        <td>@especialidad.TestMessage2</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
