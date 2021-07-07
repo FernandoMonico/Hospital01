@@ -1,0 +1,34 @@
+﻿@using Hospital01.Dto
+@model IEnumerable<PersonaDto>
+@{
+    ViewData["Title"] = "Persona";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Personas</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.NombreCompleto)</th>
+                    <th>@Html.DisplayNameFor(x => x.Email)</th>
+                    <th>@Html.DisplayNameFor(x => x.NombreSexo)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var persona in Model)
+                {
+                    <tr>
+                        <td>@persona.NombreCompleto</td>
+                        <td>@persona.Email</td>
+                        <td>@persona.NombreSexo</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
