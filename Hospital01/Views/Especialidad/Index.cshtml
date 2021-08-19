@@ -10,6 +10,14 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+
+        <form id="frm_busqueda" asp-controller="Especialidad" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns:1fr 2fr 0.5fr 0.5fr">
+            <label>Ingrese nombre de la especialidad</label>
+            <input type="text" id="txt_limpiar" class="form-control" name="Nombre" value="@ViewBag.Nom"/>
+            <input type="submit" class="btn btn-info" />
+            <input type="button" value="Limpiar" class="btn btn-danger" onclick="Limpiar()"/>
+        </form>
+
         <table class="table">
             <thead>
                 <tr>
@@ -33,3 +41,9 @@
         </table>
     </div>
 </div>
+<script>
+    function Limpiar() {
+        document.getElementById("txt_limpiar").value = "";
+        document.getElementById("frm_busqueda").submit();
+    }
+</script>
