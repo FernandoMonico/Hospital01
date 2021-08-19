@@ -2,6 +2,8 @@
 using Hospital01.Dto;
 using Hospital01.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,21 @@ namespace Hospital01.Controllers
     public class EspecialidadController : Controller
     {
         private readonly IMapper _mapper;
-        public EspecialidadController(IMapper mapper) {
+        private readonly BDHospitalContext _context;
+        public EspecialidadController(IMapper mapper, BDHospitalContext context) {
             _mapper = mapper;
+            _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(EspecialidadDto especialidadDto) {
+            var result = _context.Especialidad.AsNoTracking().AsExpandable();
+            if (especialidadDto.Nombre != null && especialidadDto.Nombre != string.Empty) {
+                result = result.Where(x => x.Nombre.Contains(especialidadDto.Nombre));
+                ViewBag.Nom = especialidadDto.Nombre;
+            }
+            var especialidadDtoList = result.Select(x => _mapper.Map<EspecialidadDto>(x)).ToList();
+            return View(especialidadDtoList);
+        }
+        public IActionResult Index_2()
         {
             var especialidadDtoList = new List<EspecialidadDto>();
             using (BDHospitalContext db = new BDHospitalContext()) {
@@ -27,6 +40,7 @@ namespace Hospital01.Controllers
                 //                           Nombre = especialidad.Nombre,
                 //                           Descripcion = especialidad.Descripcion
                 //                       }).ToList();
+                
                 especialidadDtoList = db.Especialidad.Where(x => x.Bhabilitado == 1).Select(x => _mapper.Map<EspecialidadDto>(x)).ToList();
                 EspecialidadTestMap1Dto especialidadTestMap1Dto = new EspecialidadTestMap1Dto { Active = true, TestMessage = "Message 1" };
                 EspecialidadTestMap2Dto especialidadTestMap2Dto = new EspecialidadTestMap2Dto { Active = true, TestMessage = "Message 2" };
