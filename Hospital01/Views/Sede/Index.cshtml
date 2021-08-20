@@ -9,6 +9,12 @@
 <p>
     <a asp-action="Create">Crear nueva</a>
 </p>
+
+<form id="frm_sede" asp-controller="Sede" asp-action="Index" method="post" class="mb-2">
+    <label>Ingrese el nombre de la sede</label>
+    <input type="text" class="form-control" name="Nombre" onkeyup="Buscar()" value="@ViewBag.NombreSede"/>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -39,3 +45,8 @@
 }
     </tbody>
 </table>
+<script>
+    function Buscar() {
+        document.getElementById("frm_sede").submit();
+    }
+</script>
