@@ -15,5 +15,6 @@ namespace Hospital01.Dto
         public string Email { get; set; }
         [Display(Name = "Sexo")]
         public string NombreSexo { get; set; }
+        public int SexoId { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 @model IEnumerable<PersonaDto>
 @{
     ViewData["Title"] = "Persona";
+    List<SelectListItem> selectListItems = ViewBag.selectListSexo;
 }
 
 <div class="row">
@@ -11,6 +12,10 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+        <form id="frm_filtrar" asp-controller="Persona" asp-action="Index" method="post" class="mb-2">
+            <label>Seleccione el sexo</label>
+            @Html.DropDownList("SexoId", selectListItems, new { @class = "form-control", @id = "ddl_sexo", @onchange = "FiltrarPorPersona()" })
+        </form>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -32,3 +37,8 @@
         </table>
     </div>
 </div>
+<script>
+    function FiltrarPorPersona() {
+        document.getElementById("frm_filtrar").submit();
+    }
+</script>
