@@ -15,5 +15,6 @@ namespace Hospital01.Dto
         public int? Stock { get; set; }
         [Display(Name="Forma Farmaceutica")]
         public string FormaFarmaceutica { get; set; }
+        public int FormaFarmaceuticaId { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    List<SelectListItem> formaFarmaceuticaList = ViewBag.formaFarmaceuticaList;
 }
 
 <h1>Index</h1>
@@ -9,6 +10,9 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form id="frm_filtrar" asp-controller="Medicamento" asp-action="Index" method="post" class="mb-2">
+    @Html.DropDownList("FormaFarmaceuticaId", formaFarmaceuticaList, new { @class = "form-control", @onchange="FiltrarPorFormaFarmaceutica()" })
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -57,3 +61,8 @@
 }
     </tbody>
 </table>
+<script>
+    function FiltrarPorFormaFarmaceutica() {
+        document.getElementById("frm_filtrar").submit();
+    }
+</script>
