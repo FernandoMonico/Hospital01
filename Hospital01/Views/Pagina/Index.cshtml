@@ -9,6 +9,13 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form id="frm_filtrar" asp-controller="Pagina" asp-action="Index" method="post" class="mb-2" style="display:grid;grid-template-columns:2fr 1fr 1fr">
+    <input type="text" id="txt_mensaje" name="Mensaje" value="@ViewBag.filtroMensaje"/>
+    <input type="submit" class="btn btn-primary" value="Filtrar"/>
+    <input type="button" class="btn btn-secondary" value="Limpiar" onclick="Limpiar()"/>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -51,3 +58,9 @@
 }
     </tbody>
 </table>
+<script>
+    function Limpiar() {
+        document.getElementById("txt_mensaje").value = "";
+        document.getElementById("frm_filtrar").submit();
+    }
+</script>

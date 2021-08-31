@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using LinqKit;
+
 
 namespace Hospital01.Controllers
 {
@@ -18,9 +20,14 @@ namespace Hospital01.Controllers
             _context = context;
             _mapper = mapper;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PaginaDto paginaDto)
         {
-            var paginaDtoList = await _context.Pagina.Where(x => x.Bhabilitado.HasValue && x.Bhabilitado == 1).Select(x => _mapper.Map<PaginaDto>(x)).ToListAsync();
+            var query = _context.Pagina.AsNoTracking().AsExpandable().Where(x => x.Bhabilitado == 1);
+            if (paginaDto.Mensaje != null && paginaDto.Mensaje != string.Empty) {
+                query = query.Where(x => x.Mensaje.Contains(paginaDto.Mensaje));
+            }
+            var paginaDtoList = await query.Select(x => _mapper.Map<PaginaDto>(x)).ToListAsync();
+            ViewBag.filtroMensaje = paginaDto.Mensaje;
             return View(paginaDtoList);
         }
     }
