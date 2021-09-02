@@ -40,16 +40,41 @@ namespace Hospital01.Controllers
                 //                           Nombre = especialidad.Nombre,
                 //                           Descripcion = especialidad.Descripcion
                 //                       }).ToList();
-                
+
                 especialidadDtoList = db.Especialidad.Where(x => x.Bhabilitado == 1).Select(x => _mapper.Map<EspecialidadDto>(x)).ToList();
                 EspecialidadTestMap1Dto especialidadTestMap1Dto = new EspecialidadTestMap1Dto { Active = true, TestMessage = "Message 1" };
                 EspecialidadTestMap2Dto especialidadTestMap2Dto = new EspecialidadTestMap2Dto { Active = true, TestMessage = "Message 2" };
-                for(int i = 0; i < especialidadDtoList.Count; i++) {
+                for (int i = 0; i < especialidadDtoList.Count; i++) {
                     _mapper.Map(especialidadTestMap1Dto, especialidadDtoList[i]);
                     _mapper.Map(especialidadTestMap2Dto, especialidadDtoList[i]);
                 }
             }
             return View(especialidadDtoList);
+        }
+
+        public IActionResult Create() {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(EspecialidadDto especialidadDto) {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var especialidad = _mapper.Map<Especialidad>(especialidadDto);
+                    especialidad.Bhabilitado = 1;
+                    _context.Especialidad.Add(especialidad);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                    return View(especialidadDto);
+            }
+            catch (Exception e)
+            {
+                return View(especialidadDto);
+            }
         }
     }
 }
