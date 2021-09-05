@@ -27,6 +27,9 @@ namespace Hospital01.Dto
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Iidtipousuario))
                 .ForMember(x => x.Nombre, y => y.MapFrom(z => z.Nombre))
                 .ForMember(x => x.Descripcion, y => y.MapFrom(z => z.Descripcion));
+            CreateMap<MedicamentoDto, Medicamento>()
+                .ForMember(x => x.Iidmedicamento, y => y.MapFrom(z => z.Id))
+                .ForMember(x => x.Iidformafarmaceutica, y => y.MapFrom(z => z.FormaFarmaceuticaId));
         }
     }
 }

@@ -66,5 +66,27 @@ namespace Hospital01.Controllers
             result.Insert(0, new SelectListItem { Value = string.Empty, Text = "--- Seleccione ---" });
             return result;
         }
+
+        public IActionResult Create()
+        {
+            ViewBag.formaFarmaceuticaList = GetAllFormaFarmaceutica();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(MedicamentoDto medicamentoDto) {
+            if (ModelState.IsValid)
+            {
+                var medicamento = _mapper.Map<Medicamento>(medicamentoDto);
+                medicamento.Bhabilitado = 1;
+                _context.Medicamento.Add(medicamento);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.formaFarmaceuticaList = GetAllFormaFarmaceutica();
+                return View(medicamentoDto);
+            }
+        }
     }
 }

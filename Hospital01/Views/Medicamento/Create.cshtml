@@ -1,0 +1,58 @@
+﻿@using Hospital01.Dto;
+@model MedicamentoDto;
+@{
+    ViewData["Title"] = "Agregar";
+    List<SelectListItem> formaFarmaceuticaList = ViewBag.formaFarmaceuticaList;
+}
+<h1>Nuevo Medicamento</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="frm_create_medicamento" asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Nombre"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Presentacion"></label>
+                <input asp-for="Presentacion" class="form-control" />
+                <span asp-validation-for="Presentacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Concentracion"></label>
+                <input asp-for="Concentracion" class="form-control" />
+                <span asp-validation-for="Concentracion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio"></label>
+                <input type="number" asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Stock"></label>
+                <input asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FormaFarmaceuticaId"></label>
+                <select asp-for="FormaFarmaceuticaId" asp-items="formaFarmaceuticaList" class="form-control"></select>
+                <span asp-validation-for="FormaFarmaceuticaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="Guardar()" />
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function Guardar() {
+        ConfirmSave(undefined, undefined)
+            .then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("frm_create_medicamento").submit();
+                }
+            });
+    }
+</script>
