@@ -6,14 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hospital01.Dto;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using AutoMapper;
 
 namespace Hospital01.Controllers
 {
     public class PersonaController : Controller
     {
         private readonly BDHospitalContext _context;
-        public PersonaController(BDHospitalContext context) {
+        private readonly IMapper _mapper;
+        public PersonaController(BDHospitalContext context, IMapper mapper) {
             _context = context;
+            _mapper = mapper;
         }
         public IActionResult Index(PersonaDto personaDto)
         {
@@ -59,6 +62,36 @@ namespace Hospital01.Controllers
             var result = _context.Sexo.Select(x => new SelectListItem { Text = x.Nombre, Value = x.Iidsexo.ToString() }).ToList();
             result.Insert(0, new SelectListItem { Text = "--- Seleccione ---", Value = string.Empty });
             return result;
+        }
+
+        public IActionResult Create() {
+            ViewBag.SexoList = GetAllSexo();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(PersonaDto personaDto) {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var persona = _mapper.Map<Persona>(personaDto);
+                    persona.Bhabilitado = 1;
+                    _context.Add(persona);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.SexoList = GetAllSexo();
+                    return View();
+                }
+            }
+            catch(Exception e)
+            {
+                ViewBag.SexoList = GetAllSexo();
+                return View();
+            }
         }
     }
 }
