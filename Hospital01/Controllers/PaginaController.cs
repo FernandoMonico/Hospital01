@@ -30,5 +30,26 @@ namespace Hospital01.Controllers
             ViewBag.filtroMensaje = paginaDto.Mensaje;
             return View(paginaDtoList);
         }
+        public IActionResult Create() {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(PaginaDto paginaDto) {
+            try {
+                if (ModelState.IsValid)
+                {
+                    var pagina = _mapper.Map<Pagina>(paginaDto);
+                    pagina.Bhabilitado = 1;
+                    _context.Pagina.Add(pagina);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                    return View(paginaDto);
+            }
+            catch (Exception) {
+                return View(paginaDto);
+            }
+        }
     }
 }
