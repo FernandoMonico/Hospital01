@@ -34,6 +34,7 @@ namespace Hospital01.Dto
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Campo requerido")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Formato de correo invalido")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Formato invalido")]
         public string Email { get; set; }
         [Display(Name = "Sexo")]
         public string NombreSexo { get; set; }
