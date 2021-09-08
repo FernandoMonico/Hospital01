@@ -35,5 +35,30 @@ namespace Hospital01.Controllers
             ViewBag.descripcion = tipoUsuarioDto.Descripcion;
             return View(tipoUsuarioDtoList);
         }
+
+        public IActionResult Create() {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(TipoUsuarioDto tipoUsuarioDto) {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var tipoUsuario = _mapper.Map<TipoUsuario>(tipoUsuarioDto);
+                    tipoUsuario.Bhabilitado = 1;
+                    _context.TipoUsuario.Add(tipoUsuario);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                    return View(tipoUsuarioDto);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return View(tipoUsuarioDto);
+            }
+        }
     }
 }

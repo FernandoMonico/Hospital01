@@ -11,8 +11,11 @@ namespace Hospital01.Dto
         [Display(Name = "Identificador Tipo Usuario")]
         public int Id { get; set; }
         [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Nombre { get; set; }
         [Display(Name = "Descripción")]
+        [Required(ErrorMessage = "Campo requerido")]
+        [MaxLength(25, ErrorMessage = "Maximo 25 caracteres")]
         public string Descripcion { get; set; }
     }
 }
