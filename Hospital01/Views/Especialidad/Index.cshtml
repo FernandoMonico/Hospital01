@@ -35,16 +35,29 @@
                         <td>@especialidad.Nombre</td>
                         <td>@especialidad.Descripcion</td>
                         <td>@especialidad.TestMessage1</td>
-                        <td><button class="btn btn-danger"><i class="fas fa-trash"></i></button></td>
+                        <td><button class="btn btn-danger" onclick="Eliminar(@especialidad.Id)"><i class="fas fa-trash"></i></button></td>
                     </tr>
                 }
             </tbody>
         </table>
+        <form id="frm_especialidad_delete" asp-action="Delete" method="post">
+            <input type="hidden" id="especialidadId" name="especialidadId" />
+        </form>
     </div>
 </div>
 <script>
     function Limpiar() {
         document.getElementById("txt_limpiar").value = "";
         document.getElementById("frm_busqueda").submit();
+    }
+
+    function Eliminar(id) {
+        ConfirmDelete(undefined, undefined)
+            .then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("especialidadId").value = id;
+                    document.getElementById("frm_especialidad_delete").submit();
+                }
+            });
     }
 </script>

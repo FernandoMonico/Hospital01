@@ -20,7 +20,7 @@ namespace Hospital01.Controllers
             _context = context;
         }
         public IActionResult Index(EspecialidadDto especialidadDto) {
-            var result = _context.Especialidad.AsNoTracking().AsExpandable();
+            var result = _context.Especialidad.AsNoTracking().AsExpandable().Where(x => x.Bhabilitado == 1);
             if (especialidadDto.Nombre != null && especialidadDto.Nombre != string.Empty) {
                 result = result.Where(x => x.Nombre.Contains(especialidadDto.Nombre));
                 ViewBag.Nom = especialidadDto.Nombre;
@@ -74,6 +74,28 @@ namespace Hospital01.Controllers
             catch (Exception e)
             {
                 return View(especialidadDto);
+            }
+        }
+        [HttpPost]
+        public IActionResult Delete(int especialidadId) {
+            try
+            {
+                if (especialidadId > 0)
+                {
+                    var especialidad = _context.Especialidad.First(x => x.Iidespecialidad == especialidadId);
+                    especialidad.Bhabilitado = 0;
+                    _context.Especialidad.Update(especialidad);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }   
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("Index");
             }
         }
     }
