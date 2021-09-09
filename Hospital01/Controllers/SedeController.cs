@@ -21,7 +21,7 @@ namespace Hospital01.Controllers
         }
 
         public IActionResult Index(SedeDto sedeDto) {
-            var result = _context.Sede.AsNoTracking().AsExpandable();
+            var result = _context.Sede.AsNoTracking().AsExpandable().Where(x => x.Bhabilitado == 1);
             if (sedeDto.Nombre != null && sedeDto.Nombre != string.Empty) {
                 result = result.Where(x => x.Nombre.Contains(sedeDto.Nombre));
                 ViewBag.NombreSede = sedeDto.Nombre;
@@ -41,6 +41,25 @@ namespace Hospital01.Controllers
                                .ToList();
             }
             return View(sedeDtoList);
+        }
+        [HttpPost]
+        public IActionResult Delete(int sedeId) {
+            try
+            {
+                if (sedeId > 0)
+                {
+                    var sede = _context.Sede.FirstOrDefault(x => x.Iidsede == sedeId);
+                    sede.Bhabilitado = 0;
+                    _context.Sede.Update(sede);
+                    _context.SaveChanges();
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
     }
 }

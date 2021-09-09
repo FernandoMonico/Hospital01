@@ -37,16 +37,26 @@
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                <button class="btn btn-danger" onclick="Eliminar(@item.Id)"><i class="fa fa-trash"></i></button>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<form id="frm_sede_delete" asp-action="Delete" method="post">
+    <input type="hidden" id="sedeId" name="sedeId" />
+</form>
 <script>
     function Buscar() {
         document.getElementById("frm_sede").submit();
+    }
+
+    function Eliminar(id) {
+        ConfirmDelete().then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("sedeId").value = id;
+                document.getElementById("frm_sede_delete").submit();
+            }
+        })
     }
 </script>
