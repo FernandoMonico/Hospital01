@@ -50,7 +50,6 @@ namespace Hospital01.Controllers
                 {
                     var sede = _context.Sede.FirstOrDefault(x => x.Iidsede == sedeId);
                     sede.Bhabilitado = 0;
-                    _context.Sede.Update(sede);
                     _context.SaveChanges();
                 }
             }

@@ -53,12 +53,23 @@
                         @Html.DisplayFor(modelItem => item.Descripcion)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        <i class="btn btn-danger fa fa-trash" onclick="Eliminar(@item.Id)"></i>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </form>
+<form id="frm_tipo_usuario_delete" asp-action="Delete" method="post">
+    <input type="hidden" id="tipoUsuarioId" name="tipoUsuarioId" />
+</form>
+<script>
+    function Eliminar(id) {
+        ConfirmDelete(undefined, undefined).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("tipoUsuarioId").value = id;
+                document.getElementById("frm_tipo_usuario_delete").submit();
+            }
+        })
+    }
+</script>

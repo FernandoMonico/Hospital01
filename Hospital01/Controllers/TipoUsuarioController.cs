@@ -60,5 +60,14 @@ namespace Hospital01.Controllers
                 return View(tipoUsuarioDto);
             }
         }
+        [HttpPost]
+        public IActionResult Delete(int tipoUsuarioId) {
+            if (tipoUsuarioId > 0) {
+                var tipoUsuario = _context.TipoUsuario.Find(tipoUsuarioId);
+                _context.TipoUsuario.Remove(tipoUsuario);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
