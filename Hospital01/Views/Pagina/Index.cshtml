@@ -51,17 +51,27 @@
                 @Html.DisplayFor(modelItem => item.Controller)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <button class="btn btn-danger" onclick="Eliminar(@item.Id)"><i class="fa fa-trash"></i></button>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<form id="frm_pagina_delete" asp-action="Delete" method="post">
+    <input type="hidden" id="paginaId" name="paginaId" />
+</form>
 <script>
     function Limpiar() {
         document.getElementById("txt_mensaje").value = "";
         document.getElementById("frm_filtrar").submit();
+    }
+
+    function Eliminar(id) {
+        ConfirmDelete(undefined, undefined).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("paginaId").value = id;
+                document.getElementById("frm_pagina_delete").submit();
+            }
+        })
     }
 </script>

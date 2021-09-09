@@ -51,5 +51,14 @@ namespace Hospital01.Controllers
                 return View(paginaDto);
             }
         }
+        [HttpPost]
+        public IActionResult Delete(int paginaId) {
+            if (paginaId > 0) {
+                var pagina = _context.Pagina.Find(paginaId);
+                _context.Pagina.Remove(pagina);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
