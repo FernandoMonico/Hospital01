@@ -35,7 +35,12 @@
                         <td>@especialidad.Nombre</td>
                         <td>@especialidad.Descripcion</td>
                         <td>@especialidad.TestMessage1</td>
-                        <td><button class="btn btn-danger" onclick="Eliminar(@especialidad.Id)"><i class="fas fa-trash"></i></button></td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <i class="fa fa-trash btn btn-danger" aria-hidden="true" onclick="Eliminar(@especialidad.Id)"></i>
+                                <a class="fa fa-edit btn btn-primary" aria-hidden="true" asp-action="Edit" asp-route-id="@especialidad.Id"></a>
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>

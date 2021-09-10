@@ -58,22 +58,33 @@ namespace Hospital01.Controllers
 
         [HttpPost]
         public IActionResult Create(EspecialidadDto especialidadDto) {
+            string action = string.Empty;
+            if (especialidadDto.Id == 0)
+                action = "Create";
+            else
+                action = "Edit";
             try
             {
                 if (ModelState.IsValid)
                 {
                     var especialidad = _mapper.Map<Especialidad>(especialidadDto);
-                    especialidad.Bhabilitado = 1;
-                    _context.Especialidad.Add(especialidad);
+                    if (especialidadDto.Id == 0)
+                    {
+                        especialidad.Bhabilitado = 1;
+                        _context.Especialidad.Add(especialidad);
+                    }
+                    else {
+                        _context.Especialidad.Update(especialidad);
+                    }
                     _context.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 else
-                    return View(especialidadDto);
+                    return View(action, especialidadDto);
             }
             catch (Exception e)
             {
-                return View(especialidadDto);
+                return View(action, especialidadDto);
             }
         }
         [HttpPost]
@@ -97,6 +108,15 @@ namespace Hospital01.Controllers
             {
                 return RedirectToAction("Index");
             }
+        }
+
+        public IActionResult Edit(int id) {
+            var especialidad = _context.Especialidad.Find(id);
+            if (especialidad != null) {
+                var especialidadDto = _mapper.Map<EspecialidadDto>(especialidad);
+                return View(especialidadDto);
+            }
+            return RedirectToAction("Index");
         }
     }
 }
