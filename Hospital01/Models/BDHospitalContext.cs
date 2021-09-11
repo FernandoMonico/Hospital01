@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Hospital01.Dto;
 
 namespace Hospital01.Models
 {
@@ -650,5 +651,7 @@ namespace Hospital01.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<Hospital01.Dto.MedicamentoDto> MedicamentoDto { get; set; }
     }
 }

@@ -53,16 +53,30 @@
                 @Html.DisplayFor(modelItem => item.FormaFarmaceutica)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <div class="btn-group" role="group">
+                    <i class="btn btn-danger fa fa-trash" aria-hidden="true" onclick="Eliminar(@item.Id)"></i>
+                    <a class="btn btn-primary fa fa-edit" aria-hidden="true" asp-action="Edit" asp-route-id="@item.Id"></a>
+                </div>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<form id="frm_medicamento_delete" asp-action="Delete" method="post">
+    <input type="hidden" id="medicamentoId" name="medicamentoId" />
+</form>
 <script>
     function FiltrarPorFormaFarmaceutica() {
         document.getElementById("frm_filtrar").submit();
+    }
+
+    function Eliminar(id) {
+        ConfirmDelete(undefined, undefined)
+            .then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("medicamentoId").value = id;
+                    document.getElementById("frm_medicamento_delete").submit();
+                }
+            });
     }
 </script>

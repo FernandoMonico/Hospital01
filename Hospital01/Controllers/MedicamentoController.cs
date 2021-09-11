@@ -88,5 +88,47 @@ namespace Hospital01.Controllers
                 return View(medicamentoDto);
             }
         }
+
+        [HttpPost]
+        public IActionResult Delete(int medicamentoId) {
+            if (medicamentoId > 0) {
+                var medicamento = _context.Medicamento.Find(medicamentoId);
+                _context.Medicamento.Remove(medicamento);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int? id) {
+            if (id != null && id > 0)
+            {
+                var medicamento = await _context.Medicamento.FindAsync(id);
+                if (medicamento != null)
+                {
+                    var medicamentoDto = _mapper.Map<MedicamentoDto>(medicamento);
+                    ViewBag.formaFarmaceuticaList = GetAllFormaFarmaceutica();
+                    return View(medicamentoDto);
+                }
+                else
+                    return NotFound();
+            }
+            else
+                return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(MedicamentoDto medicamentoDto) {
+            if (ModelState.IsValid)
+            {
+                var medicamento = _mapper.Map<Medicamento>(medicamentoDto);
+                _context.Update(medicamento);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ViewBag.formaFarmaceuticaList = GetAllFormaFarmaceutica();
+                return View(medicamentoDto);
+            }
+        }
     }
 }
