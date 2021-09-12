@@ -70,7 +70,8 @@ namespace Hospital01.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(PersonaDto personaDto) {
+        public IActionResult Create(PersonaDto personaDto)
+        {
             try
             {
                 if (ModelState.IsValid)
@@ -87,11 +88,21 @@ namespace Hospital01.Controllers
                     return View();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ViewBag.SexoList = GetAllSexo();
                 return View();
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? personaId) {
+            if (personaId != null && personaId > 0) {
+                var persona = _context.Persona.Find(personaId);
+                persona.Bhabilitado = 0;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
