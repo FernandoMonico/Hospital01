@@ -36,7 +36,7 @@ namespace Hospital01.Controllers
         [HttpPost]
         public IActionResult Create(PaginaDto paginaDto) {
             try {
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && !ExisteMensaje(ref paginaDto))
                 {
                     var pagina = _mapper.Map<Pagina>(paginaDto);
                     pagina.Bhabilitado = 1;
@@ -59,6 +59,44 @@ namespace Hospital01.Controllers
                 _context.SaveChanges();
             }
             return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Edit(int? id) {
+            if (id != null && id > 0)
+            {
+                var pagina = await _context.Pagina.FindAsync(id);
+                if (pagina != null)
+                {
+                    var paginaDto = _mapper.Map<PaginaDto>(pagina);
+                    return View(paginaDto);
+                }
+                else
+                    return NotFound();
+            }
+            else
+                return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PaginaDto paginaDto)
+        {
+            if (ModelState.IsValid && !ExisteMensaje(ref paginaDto))
+            {
+                var pagina = _mapper.Map<Pagina>(paginaDto);
+                _context.Pagina.Update(pagina);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            else
+                return View(paginaDto);
+        }
+
+        private bool ExisteMensaje(ref PaginaDto paginaDto) {
+            var paginaId = paginaDto.Id;
+            var paginaMensaje = paginaDto.Mensaje;
+            bool existeMensaje = _context.Pagina.Any(x => x.Iidpagina != paginaId && x.Mensaje.ToLower().Trim() == paginaMensaje.ToLower().Trim());
+            if (existeMensaje)
+                paginaDto.MensajeErrorMessage = "El mensaje ya existe";
+            return existeMensaje;
         }
     }
 }

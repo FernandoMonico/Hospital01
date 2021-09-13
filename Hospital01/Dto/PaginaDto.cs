@@ -21,5 +21,7 @@ namespace Hospital01.Dto
         [MinLength(3, ErrorMessage = "Minimo 3 caracteres")]
         [MaxLength(30, ErrorMessage = "Maximo 20 caracteres")]
         public string Controller { get; set; }
+        public int? Bhabilitado { get; set; }
+        public string MensajeErrorMessage { get; set; }
     }
 }

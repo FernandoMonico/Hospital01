@@ -52,6 +52,7 @@
             </td>
             <td>
                 <button class="btn btn-danger" onclick="Eliminar(@item.Id)"><i class="fa fa-trash"></i></button>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
             </td>
         </tr>
 }
