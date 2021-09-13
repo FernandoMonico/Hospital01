@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LinqKit;
+using Hospital01.Helper;
 
 namespace Hospital01.Controllers
 {
@@ -18,6 +19,31 @@ namespace Hospital01.Controllers
         public SedeController(IMapper mapper, BDHospitalContext context) {
             _mapper = mapper;
             _context = context;
+        }
+
+        public IActionResult Create() {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(SedeDto sedeDto) {
+            try
+            {
+                if (ModelState.IsValid && !ExisteNombreSede(ref sedeDto))
+                {
+                    var sede = _mapper.Map<Sede>(sedeDto);
+                    sede.Bhabilitado = 1;
+                    _context.Sede.Add(sede);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                else
+                    return View(sedeDto);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         public IActionResult Index(SedeDto sedeDto) {
@@ -59,6 +85,51 @@ namespace Hospital01.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int? id) {
+            if (id != null && id > 0)
+            {
+                var sede = await _context.Sede.FindAsync(id);
+                if (sede != null)
+                {
+                    var sedeDto = _mapper.Map<SedeDto>(sede);
+                    return View(sedeDto);
+                }
+                else
+                    return NotFound();
+            }
+            else
+                return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(SedeDto sedeDto) {
+            try
+            {
+                if (ModelState.IsValid && !ExisteNombreSede(ref sedeDto))
+                {
+                    var sede = _mapper.Map<Sede>(sedeDto);
+                    _context.Sede.Update(sede);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                else
+                    return View(sedeDto);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        private bool ExisteNombreSede(ref SedeDto sedeDto) {
+            var sedeId = sedeDto.Id;
+            var sedeNombre = sedeDto.Nombre;
+            bool existeNombreSede = _context.Sede.Any(x => x.Iidsede != sedeId && x.Nombre.ToLower() == sedeNombre.ToLower());
+            if(existeNombreSede)
+                sedeDto.NombreErrorMessage = "El nombre de la sede ya existe";
+            return existeNombreSede;
         }
     }
 }

@@ -10,8 +10,12 @@ namespace Hospital01.Dto
     {
         public int Id { get; set; }
         [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Nombre { get; set; }
         [Display(Name = "Dirección")]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Direccion { get; set; }
+        public int? Bhabilitado { get; set; }
+        public string NombreErrorMessage { get; set; }
     }
 }

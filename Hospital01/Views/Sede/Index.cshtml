@@ -37,7 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
-                <button class="btn btn-danger" onclick="Eliminar(@item.Id)"><i class="fa fa-trash"></i></button>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-danger" onclick="Eliminar(@item.Id)" aria-hidden="true"><i class="fa fa-trash"></i></button>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id" aria-hidden="true"><i class="fa fa-edit"></i></a>
+                </div>
             </td>
         </tr>
 }

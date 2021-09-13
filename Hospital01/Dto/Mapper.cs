@@ -20,6 +20,8 @@ namespace Hospital01.Dto
                 .ForMember(x => x.TestMessage2, y => y.MapFrom(z => z.TestMessage));
             CreateMap<Sede, SedeDto>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Iidsede));
+            CreateMap<SedeDto, Sede>()
+                .ForMember(x => x.Iidsede, y => y.MapFrom(z => z.Id));
             CreateMap<Pagina, PaginaDto>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Iidpagina))
                 .ForMember(x => x.Action, y => y.MapFrom(z => z.Accion))
