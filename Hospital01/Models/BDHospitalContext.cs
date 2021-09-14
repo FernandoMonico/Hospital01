@@ -657,5 +657,7 @@ namespace Hospital01.Models
         public DbSet<Hospital01.Dto.SedeDto> SedeDto { get; set; }
 
         public DbSet<Hospital01.Dto.PaginaDto> PaginaDto { get; set; }
+
+        public DbSet<Hospital01.Dto.PersonaDto> PersonaDto { get; set; }
     }
 }

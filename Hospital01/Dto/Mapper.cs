@@ -41,9 +41,15 @@ namespace Hospital01.Dto
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Iidformafarmaceutica))
                 .ForMember(x => x.FormaFarmaceuticaId, y => y.MapFrom(z => z.Iidformafarmaceutica));
             CreateMap<PersonaDto, Persona>()
+                .ForMember(x => x.Iidpersona, y => y.MapFrom(z => z.Id))
                 .ForMember(x => x.Appaterno, y => y.MapFrom(z => z.ApellidoPaterno))
                 .ForMember(x => x.Apmaterno, y => y.MapFrom(z => z.ApellidoMaterno))
                 .ForMember(x => x.Iidsexo, y => y.MapFrom(z => z.SexoId));
+            CreateMap<Persona, PersonaDto>()
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.Iidpersona))
+                .ForMember(x => x.ApellidoPaterno, y => y.MapFrom(z => z.Appaterno))
+                .ForMember(x => x.ApellidoMaterno, y => y.MapFrom(z => z.Apmaterno))
+                .ForMember(x => x.SexoId, y => y.MapFrom(z => z.Iidsexo));
         }
     }
 }

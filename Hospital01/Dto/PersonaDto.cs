@@ -41,5 +41,7 @@ namespace Hospital01.Dto
         [Display(Name = "Seleccione Sexo")]
         [Required(ErrorMessage = "Campo requerido")]
         public int? SexoId { get; set; }
+        public int? Bhabilitado { get; set; }
+        public string EmailErrorMessage { get; set; }
     }
 }

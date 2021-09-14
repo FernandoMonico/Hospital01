@@ -74,24 +74,23 @@ namespace Hospital01.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && !ExisteCorreo(ref personaDto))
                 {
                     var persona = _mapper.Map<Persona>(personaDto);
                     persona.Bhabilitado = 1;
                     _context.Add(persona);
                     _context.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction(nameof(Index));
                 }
                 else
                 {
                     ViewBag.SexoList = GetAllSexo();
-                    return View();
+                    return View(personaDto);
                 }
             }
             catch (Exception e)
             {
-                ViewBag.SexoList = GetAllSexo();
-                return View();
+                return NotFound();
             }
         }
 
@@ -103,6 +102,56 @@ namespace Hospital01.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Edit(int? id) {
+            if (id != null && id > 0)
+            {
+                var persona = await _context.Persona.FindAsync(id);
+                if (persona != null)
+                {
+                    var personaDto = _mapper.Map<PersonaDto>(persona);
+                    ViewBag.SexoList = GetAllSexo();
+                    return View(personaDto);
+                }
+                else
+                    return NotFound();
+            }
+            else
+                return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PersonaDto personaDto) {
+            try
+            {
+                if (ModelState.IsValid && !ExisteCorreo(ref personaDto))
+                {
+                    var persona = _mapper.Map<Persona>(personaDto);
+                    _context.Persona.Update(persona);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.SexoList = GetAllSexo();
+                    return View(personaDto);
+                }
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        private bool ExisteCorreo(ref PersonaDto personaDto)
+        {
+            var email = personaDto.Email.ToLower().Trim();
+            var id = personaDto.Id;
+            bool existeCorreo = _context.Persona.Any(x => x.Iidpersona != id && x.Email.ToLower().Trim() == email);
+            if (existeCorreo)
+                personaDto.EmailErrorMessage = "Ya existe este correo";
+            return existeCorreo;
         }
     }
 }

@@ -1,16 +1,19 @@
 ﻿@model Hospital01.Dto.PersonaDto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     var sexoList = ViewBag.SexoList;
 }
 
-<h1>Nueva Persona</h1>
+<h1>Editar Persona</h1>
+
 <hr />
 <div class="row">
-    <div class="col-md-6">
-        <form id="frm_create_persona" asp-action="Create" method="post">
+    <div class="col-md-4">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Bhabilitado" />
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -45,29 +48,19 @@
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
-                @if (Model != null && Model.EmailErrorMessage != null)
-                {
+                @if(Model != null && Model.EmailErrorMessage != null){
                     <span class="text-danger">@Model.EmailErrorMessage</span>
                 }
             </div>
             <div class="form-group">
                 <label asp-for="SexoId" class="control-label"></label>
-                <select asp-items="@sexoList" asp-for="SexoId" class="form-control"></select>
+                <select asp-for="SexoId" asp-items="sexoList" class="form-control"></select>
                 <span asp-validation-for="SexoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="button" value="Guardar" class="btn btn-primary" onclick="Guardar()"/>
-                <a asp-action="Index" class="btn btn-secondary">Regresar al listado</a>
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Regresar al listado</a>
             </div>
         </form>
     </div>
 </div>
-<script>
-    function Guardar() {
-        ConfirmSave(undefined, undefined).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById("frm_create_persona").submit();
-            }
-        })
-    }
-</script>
