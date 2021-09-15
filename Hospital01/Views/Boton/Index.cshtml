@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table index-table">
     <thead>
         <tr>
             <th>
@@ -45,3 +45,10 @@
 }
     </tbody>
 </table>
+<script>
+    window.onload = function () {
+        $(document).ready(function () {
+            DataTableEs();
+        });
+    }
+</script>

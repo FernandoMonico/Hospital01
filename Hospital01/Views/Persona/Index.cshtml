@@ -17,7 +17,7 @@
             <label>Seleccione el sexo</label>
             @Html.DropDownList("SexoId", selectListItems, new { @class = "form-control", @id = "ddl_sexo", @onchange = "FiltrarPorPersona()" })
         </form>
-        <table class="table">
+        <table class="table index-table">
             <thead class="thead-dark">
                 <tr>
                     <th>@Html.DisplayNameFor(x => x.NombreCompleto)</th>
@@ -49,6 +49,12 @@
     </div>
 </div>
 <script>
+    window.onload = function () {
+        $(document).ready(function () {
+            DataTableEs();
+        });
+    }
+
     function FiltrarPorPersona() {
         document.getElementById("frm_filtrar").submit();
     }

@@ -19,7 +19,7 @@
             <input type="button" value="Limpiar" class="btn btn-danger" onclick="Limpiar()"/>
         </form>
 
-        <table class="table">
+        <table class="table index-table">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -51,6 +51,12 @@
     </div>
 </div>
 <script>
+    window.onload = function () {
+        $(document).ready(function () {
+            DataTableEs();
+        });
+    }
+
     function Limpiar() {
         document.getElementById("txt_limpiar").value = "";
         document.getElementById("frm_busqueda").submit();
