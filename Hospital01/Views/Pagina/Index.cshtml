@@ -17,7 +17,7 @@
     <input type="button" class="btn btn-secondary" value="Limpiar" onclick="Limpiar()"/>
 </form>
 
-<table class="table">
+<table class="table index-table">
     <thead>
         <tr>
             <th>
@@ -62,6 +62,12 @@
     <input type="hidden" id="paginaId" name="paginaId" />
 </form>
 <script>
+    window.onload = function () {
+        $(document).ready(function () {
+            DataTableEs();
+        });
+    }
+
     function Limpiar() {
         document.getElementById("txt_mensaje").value = "";
         document.getElementById("frm_filtrar").submit();

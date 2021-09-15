@@ -10,7 +10,7 @@
     <a asp-action="Create">Create New</a>
 </p>
 <form asp-controller="TipoUsuario" asp-action="Index" method="post">
-    <table class="table">
+    <table class="table index-table">
         <thead class="thead-dark">
             <tr>
                 <th>
@@ -64,6 +64,12 @@
     <input type="hidden" id="tipoUsuarioId" name="tipoUsuarioId" />
 </form>
 <script>
+    window.onload = function () {
+        $(document).ready(function () {
+            DataTableEs();
+        });
+    }
+
     function Eliminar(id) {
         ConfirmDelete(undefined, undefined).then((result) => {
             if (result.isConfirmed) {

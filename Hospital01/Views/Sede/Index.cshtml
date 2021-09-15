@@ -15,7 +15,7 @@
     <input type="text" class="form-control" name="Nombre" onkeyup="Buscar()" value="@ViewBag.NombreSede"/>
 </form>
 
-<table class="table">
+<table class="table index-table">
     <thead>
         <tr>
             <th>
@@ -50,6 +50,12 @@
     <input type="hidden" id="sedeId" name="sedeId" />
 </form>
 <script>
+    window.onload = function () {
+        $(document).ready(function () {
+            DataTableEs();
+        });
+    }
+
     function Buscar() {
         document.getElementById("frm_sede").submit();
     }
