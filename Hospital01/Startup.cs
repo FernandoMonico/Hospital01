@@ -29,6 +29,7 @@ namespace Hospital01
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BDHospitalContext>(options => options.UseSqlServer(connection));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddCloudscribePagination();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

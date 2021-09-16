@@ -1,0 +1,62 @@
+﻿@using Hospital01.ViewModels
+@model SedeListViewModel
+
+@{
+    ViewData["Title"] = "IndexPagination1";
+}
+
+<h1>IndexPagination1</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Habilitado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SedeList.Data) {
+        <tr>
+            <td>
+                @item.Nombre
+            </td>
+            <td>
+                @item.Direccion
+            </td>
+            <td>
+                @(item.Bhabilitado <= 0 ? "Inactivo" : "Activo")
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <cs-pager cs-paging-pagesize="@Model.SedeList.PageSize"
+              cs-paging-pagenumber="@Model.SedeList.PageNumber"
+              cs-paging-totalitems="@Model.SedeList.TotalItems"
+              cs-pagenumber-param="p"
+              cs-show-first-last="true"
+              cs-suppress-empty-nextprev="true"
+              cs-suppress-inactive-firstlast="true"
+              cs-first-page-text="Primero"
+              cs-last-page-text="Ultimo"
+              cs-pager-li-current-class="page-item active"
+              cs-pager-li-non-active-class="page-item disabled"
+              cs-pager-li-other-class="page-item"
+              cs-pager-link-current-class="page-link"
+              cs-pager-link-other-class="page-link"
+              asp-controller="Sede"
+              asp-action="IndexPagination1"
+              cs-preserve-ambient-querystring="false">
+    </cs-pager>
+</div>

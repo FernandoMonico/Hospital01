@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LinqKit;
 using Hospital01.Helper;
+using Hospital01.ViewModels;
 
 namespace Hospital01.Controllers
 {
@@ -130,6 +131,18 @@ namespace Hospital01.Controllers
             if(existeNombreSede)
                 sedeDto.NombreErrorMessage = "El nombre de la sede ya existe";
             return existeNombreSede;
+        }
+
+        private const int DefaultPageSize = 5;
+        public IActionResult IndexPagination1(int p = 1) {
+            var currentPageNum = p;
+            var offset = (DefaultPageSize * currentPageNum) - DefaultPageSize;
+            var model = new SedeListViewModel();
+            model.SedeList.Data = _context.Sede.Skip(offset).Take(DefaultPageSize).Select(x => _mapper.Map<SedeDto>(x)).ToList();
+            model.SedeList.PageNumber = currentPageNum;
+            model.SedeList.PageSize = DefaultPageSize;
+            model.SedeList.TotalItems = _context.Sede.Count();
+            return View(model);
         }
     }
 }
