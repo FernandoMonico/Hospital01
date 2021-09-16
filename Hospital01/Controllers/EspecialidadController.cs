@@ -118,5 +118,10 @@ namespace Hospital01.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public async Task<List<EspecialidadDto>> FiltrarEspecialidad(string nombreEspecialidad) {
+            var especialidadDtoList = await _context.Especialidad.Where(x => x.Nombre.Contains(nombreEspecialidad)).Select(x => _mapper.Map<EspecialidadDto>(x)).ToListAsync();
+            return especialidadDtoList;
+        }
     }
 }
